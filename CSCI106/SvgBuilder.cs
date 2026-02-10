@@ -20,7 +20,7 @@
             };
         }
 
-        // New method: adds a rectangle to the SVG
+        
         public SvgBuilder AddRectangle(
             double x, 
             double y, 
@@ -31,8 +31,8 @@
             double strokeWidth = 1.0)
         {
             string rect = $@"<rect x=""{x}"" y=""{y}"" width=""{width}"" height=""{height}"" fill=""{fill}"" stroke=""{stroke}"" stroke-width=""{strokeWidth}"" />";
-            Buffer += rect + "\n";  // Adding newline for readability in the output SVG
-            return this;  // Fluent interface
+            Buffer += rect + "\n";  
+            return this;  
         }
 
         public string Build() =>
@@ -56,15 +56,15 @@
         private static void TestBasicRectangle()
         {
             var svg = SvgBuilder.New((400, 300))
-                .AddRectangle(50, 50, 200, 100)  // black fill, default stroke
+                .AddRectangle(50, 50, 200, 100)  //
                 .Build();
 
             Console.WriteLine("=== Test 1: Basic Rectangle ===");
             Console.WriteLine(svg);
             Console.WriteLine();
 
-            // Quick visual check expectations:
-            // Should contain: <rect x="50" y="50" width="200" height="100" fill="black" stroke="none" stroke-width="1" />
+            
+            
         }
 
         private static void TestRectangleWithStrokeAndColor()
@@ -77,7 +77,7 @@
             Console.WriteLine(svg);
             Console.WriteLine();
 
-            // Should contain: fill="#ff6347" stroke="navy" stroke-width="4"
+            
         }
 
         private static void TestMultipleRectangles()
