@@ -195,3 +195,35 @@
         }
     }
 }
+{public bool AddRectFromText(string s)
+
+    s = s.Trim().ToLower();
+    if (!s.StartsWith("rect ")) return false;
+
+    string[] parts = s.Substring(5).Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+    if (parts.Length < 5) return false;
+
+    // last thing is color, everything before is numbers
+    string color = parts[^1];
+
+    if (!double.TryParse(parts[0], out double x) ||
+        !double.TryParse(parts[1], out double y) ||
+        !double.TryParse(parts[2], out double w) ||
+        !double.TryParse(parts[3], out double h))
+    {
+        return false;
+    }
+
+    if (w <= 0 || h <= 0) return false;
+
+    // just reuse the real method — it will do the viewport checks etc
+    try
+    {
+        AddRectangle(x, y, w, h, fill: color);
+        return true;
+    }
+    catch
+    {
+        return false;
+    }
