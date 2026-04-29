@@ -195,18 +195,22 @@
         }
     }
 }
-{public bool AddRectFromText(string s)
+public bool AddRectFromText(string s)
 
     s = s.Trim().ToLower();
     if (!s.StartsWith("rect ")) return false;
 
-    string[] parts = s.Substring(5).Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+    // Replace commas with space so split works the same either way
+    string content = s.Substring(5).Replace(",", " ");
+
+    // Split on whitespace and throw away empty entries
+    string[] parts = content.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
 
     if (parts.Length < 5) return false;
 
-    // last thing is color, everything before is numbers
-    string color = parts[^1];
+    string color = parts[^1];           // last = color
 
+    // Try to parse exactly four numbers before the color
     if (!double.TryParse(parts[0], out double x) ||
         !double.TryParse(parts[1], out double y) ||
         !double.TryParse(parts[2], out double w) ||
@@ -217,7 +221,6 @@
 
     if (w <= 0 || h <= 0) return false;
 
-    // just reuse the real method — it will do the viewport checks etc
     try
     {
         AddRectangle(x, y, w, h, fill: color);

@@ -1,0 +1,81 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        bool playAgain = true;
+
+        while (playAgain)
+        {
+            Console.Clear();
+            Console.WriteLine("===== NUMBER GUESSING GAME =====");
+            Console.WriteLine("Select Difficulty:");
+            Console.WriteLine("1. Easy (1-10)");
+            Console.WriteLine("2. Medium (1-50)");
+            Console.WriteLine("3. Hard (1-100)");
+            Console.Write("Choice: ");
+
+            int maxNumber = 10;
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    maxNumber = 10;
+                    break;
+                case "2":
+                    maxNumber = 50;
+                    break;
+                case "3":
+                    maxNumber = 100;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice. Defaulting to Easy.");
+                    break;
+            }
+
+            Random rand = new Random();
+            int secretNumber = rand.Next(1, maxNumber + 1);
+            int attempts = 0;
+            bool guessedCorrectly = false;
+
+            Console.WriteLine($"\nI'm thinking of a number between 1 and {maxNumber}...");
+
+            while (!guessedCorrectly)
+            {
+                Console.Write("Enter your guess: ");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out int guess))
+                {
+                    attempts++;
+
+                    if (guess == secretNumber)
+                    {
+                        Console.WriteLine($"\n🎉 Correct! You guessed it in {attempts} attempts.");
+                        guessedCorrectly = true;
+                    }
+                    else if (guess < secretNumber)
+                    {
+                        Console.WriteLine("Too low!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Too high!");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number.");
+                }
+            }
+
+            Console.Write("\nPlay again? (y/n): ");
+            string again = Console.ReadLine().ToLower();
+
+            playAgain = again == "y";
+        }
+
+        Console.WriteLine("\nThanks for playing!");
+    }
+}
